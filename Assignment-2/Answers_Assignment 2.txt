@@ -1,4 +1,4 @@
-Output questions ::
+gitOutput questions ::
 
 var x = 1;
 console.log(x);
