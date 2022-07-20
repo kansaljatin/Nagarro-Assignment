@@ -4,10 +4,15 @@ let operator = ''
 let total = ''
 
 $(document).ready(function () {
-  $('button').click(function (e) {
+  $('button').on('click', function (e) {
     let btn = e.target.innerHTML
-    if (btn >= '0' && btn <= '9') {
+    if ((btn >= '0' && btn <= '9') || btn == '.') {
       handleNumber(btn)
+    } else if (btn === 'AC') {
+      num1 = num2 = operator = ''
+      total = '0'
+      displayButton(total)
+      displayOperator(operator)
     } else {
       handleOperator(btn)
     }
@@ -15,39 +20,42 @@ $(document).ready(function () {
 })
 
 function handleNumber(num) {
-  if (num1 === '') {
-    num1 = num
+  if (operator === '') {
+    num1 += num
+    displayButton(num1)
   } else {
-    num2 = num
+    num2 += num
+    displayButton(num2)
   }
-  displayButton(num)
 }
 
 function handleOperator(oper) {
-  if (operator === '') {
-    operator = oper
-  } else {
+  if (operator !== '') {
     handleTotal()
-    operator = oper
   }
+  operator = oper
+  displayOperator(oper)
 }
-
 function handleTotal() {
   switch (operator) {
     case '+':
-      total += +num1 + +num2
+      total = +num1 + +num2
       displayButton(total)
       break
     case '-':
-      total += +num1 - +num2
+      total = +num1 - +num2
       displayButton(total)
       break
     case '/':
-      total += +num1 / +num2
+      total = +num1 / +num2
       displayButton(total)
       break
-    case '+':
-      total += +num1 * +num2
+    case 'X':
+      total = +num1 * +num2
+      displayButton(total)
+      break
+    case 'x^y':
+      total = Math.pow(+num1, +num2)
       displayButton(total)
       break
   }
@@ -58,7 +66,12 @@ function displayButton(btn) {
   $('.input').text(btn)
 }
 
-function UpdateVariables() {
+function displayOperator(btn) {
+  if (btn === 'Enter') $('.oper').text('Result')
+  else $('.oper').text(btn)
+}
+
+function updateVariables() {
   num1 = total
   num2 = ''
 }
