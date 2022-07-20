@@ -1,18 +1,17 @@
-let num1 = ''
-let num2 = ''
-let operator = ''
-let total = ''
+let n1 = ''
+let n2 = ''
+let op = ''
+let ans = ''
 
 $(document).ready(function () {
   $('button').on('click', function (e) {
     let btn = e.target.innerHTML
     if ((btn >= '0' && btn <= '9') || btn == '.') {
       handleNumber(btn)
-    } else if (btn === 'AC') {
-      num1 = num2 = operator = ''
-      total = '0'
-      displayButton(total)
-      displayOperator(operator)
+    } else if (btn === 'Clear') {
+      n1 = n2 = op = ''
+      ans = 0
+      displayButton(ans)
     } else {
       handleOperator(btn)
     }
@@ -20,45 +19,45 @@ $(document).ready(function () {
 })
 
 function handleNumber(num) {
-  if (operator === '') {
-    num1 += num
-    displayButton(num1)
+  if (op === '') {
+    n1 += num
+    displayButton(n1)
   } else {
-    num2 += num
-    displayButton(num2)
+    n2 += num
+    displayButton(n2)
   }
 }
 
 function handleOperator(oper) {
-  if (operator !== '') {
-    handleTotal()
+  if (op === '') {
+    op = oper
+  } else {
+    handleAns()
+    op = oper
   }
-  operator = oper
-  displayOperator(oper)
 }
-function handleTotal() {
-  switch (operator) {
+
+function handleAns() {
+  // +n1 ->converts n1 from string to integer
+  switch (op) {
     case '+':
-      total = +num1 + +num2
-      displayButton(total)
+      ans = +n1 + +n2
+      displayButton(ans)
       break
     case '-':
-      total = +num1 - +num2
-      displayButton(total)
+      ans = +n1 - +n2
+      displayButton(ans)
       break
     case '/':
-      total = +num1 / +num2
-      displayButton(total)
+      ans = +n1 / +n2
+      displayButton(ans)
       break
     case 'X':
-      total = +num1 * +num2
-      displayButton(total)
-      break
-    case 'x^y':
-      total = Math.pow(+num1, +num2)
-      displayButton(total)
+      ans = +n1 * +n2
+      displayButton(ans)
       break
   }
+
   updateVariables()
 }
 
@@ -66,12 +65,7 @@ function displayButton(btn) {
   $('.input').text(btn)
 }
 
-function displayOperator(btn) {
-  if (btn === 'Enter') $('.oper').text('Result')
-  else $('.oper').text(btn)
-}
-
 function updateVariables() {
-  num1 = total
-  num2 = ''
+  n1 = ans
+  n2 = ''
 }
