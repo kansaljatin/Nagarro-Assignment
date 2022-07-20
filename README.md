@@ -8,3 +8,8 @@
  <a href="https://kansaljatin.github.io/Pop-Up/">
     Pop-Up
   </a>
+  
+  # Calculator
+ <a href="https://kansaljatin.github.io/Calculator-using-jQuery/">
+    Calculator
+  </a>
